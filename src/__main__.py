@@ -30,6 +30,10 @@ def main(book: AddressBook):  # Головна функція бота
                 - add-birthday (add birthday for contact),
                 - show-birthday (show birthday for contact),
                 - birthdays (show upcoming birthdays),
+                - add_note (add new note)
+                - search_notes (search note)
+                - edit_note (edit note)
+                - delete_note (delete note )    
                 - help (print this message),
                 - close or exit (end of work)""")
 
@@ -49,6 +53,14 @@ def main(book: AddressBook):  # Головна функція бота
                 print(show_birthday(args, book))
             elif cmd == "birthdays":
                 print(birthdays(args, book))
+            elif cmd == "add_note":
+                print(add_note())
+            elif cmd == "search_notes":
+                print(search_notes())
+            elif cmd == "edit_note":
+                print(edit_note())
+            elif cmd == "delete_note":
+                print(delete_note())
             else:
                 print("Invalid command.")  # Вивід повідомлення коли команда не відповідає поточному функціоналу
 

@@ -103,3 +103,54 @@ def birthdays(args, book): # Метод для ініціалізації пош
     else: # Вивід якщо метод не повернув результатом запис
         return "No upcoming birthdays."
     
+# Function to add a new note
+@input_error
+def add_note():
+    data = load_data("usr/notes.json")
+    text = input("Note text: ")
+    tags = input("Tags (comma-separated): ").split(",")
+    note = {"text": text, "tags": [tag.strip() for tag in tags]}
+    data.append(note)
+    save_data(data, "usr/notes.json")
+    print("Note added successfully")
+
+# Function to search notes by text or tags
+@input_error
+def search_notes():
+    data = load_data("usr/notes.json")
+    query = input("Enter search query: ").strip().lower()
+    if not query:
+        print("No notes found. Please provide a valid search query.")
+        return
+
+    results = [note for note in data if query in note["text"].lower() or query in [tag.lower() for tag in note["tags"]]]
+    if results:
+        print("Search results:")
+        for result in results:
+            print(result)
+    else:
+        print("No notes found with the query:", query)
+
+# Function to edit an existing note
+@input_error
+def edit_note():
+    data = load_data("usr/notes.json")
+    note_text = input("Enter note text to edit: ").strip().lower()
+    for note in data:
+        if note["text"].lower() == note_text:
+            note["text"] = input(f"New text ({note['text']}): ") or note["text"]
+            note["tags"] = input(f"New tags (comma-separated) ({', '.join(note['tags'])}): ").split(",") or note["tags"]
+            save_data(data, "usr/notes.json")
+            print("Note updated successfully")
+            return
+    print("Note not found")
+
+# Function to delete a note
+@input_error
+def delete_note():
+    data = load_data("usr/notes.json")
+    note_text = input("Enter note text to delete: ").strip().lower()
+    data = [note for note in data if note["text"].lower() != note_text]
+    save_data(data, "usr/notes.json")
+    print("Note deleted successfully")
+    
